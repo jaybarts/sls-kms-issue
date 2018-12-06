@@ -1,0 +1,2699 @@
+{
+  "service": {
+    "service": "tickets",
+    "serviceObject": {
+      "name": "tickets"
+    },
+    "provider": {
+      "stage": "test",
+      "region": "ca-central-1",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._'\",\\-\\/\\(\\)]+?)}",
+      "name": "aws",
+      "runtime": "nodejs8.10",
+      "memorySize": 256,
+      "timeout": 10,
+      "environment": {
+        "stage": "test",
+        "region": "ca-central-1",
+        "initStub": "false"
+      },
+      "versionFunctions": true,
+      "remoteFunctionData": null,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket"
+          },
+          "InitLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-init"
+            }
+          },
+          "ProfileLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-profile"
+            }
+          },
+          "TicketStatusListLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-ticketStatusList"
+            }
+          },
+          "TurnaroundTimesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-turnaroundTimes"
+            }
+          },
+          "TicketIDChangesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-ticketIDChanges"
+            }
+          },
+          "OwnerIDChangesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-ownerIDChanges"
+            }
+          },
+          "TicketsProcessedLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-ticketsProcessed"
+            }
+          },
+          "ListOwnersLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-listOwners"
+            }
+          },
+          "DashboardStatsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-dashboardStats"
+            }
+          },
+          "TicketsBillingLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-ticketsBilling"
+            }
+          },
+          "ListWatchersLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-listWatchers"
+            }
+          },
+          "LoaderLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-loader"
+            }
+          },
+          "ListFilesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-listFiles"
+            }
+          },
+          "CustomDropdownsLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/tickets-test-customDropdowns"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "test",
+                        "tickets",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-init:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-profile:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketStatusList:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-turnaroundTimes:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketIDChanges:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ownerIDChanges:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketsProcessed:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listOwners:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-dashboardStats:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketsBilling:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listWatchers:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-loader:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listFiles:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-customDropdowns:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-init:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-profile:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketStatusList:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-turnaroundTimes:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketIDChanges:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ownerIDChanges:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketsProcessed:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listOwners:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-dashboardStats:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-ticketsBilling:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listWatchers:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-loader:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-listFiles:*:*"
+                          },
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/tickets-test-customDropdowns:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "tickets",
+                    "test",
+                    "ca-central-1",
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "InitLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-init",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "InitLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "InitLambdaVersionb0CX009NqFVYh6Rxp6r8rp7xfnpAhaQ4PgLkcYjFvk": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "InitLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "ProfileLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-profile",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "ProfileLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "ProfileLambdaVersionrGEC3u2raVDE9wPY6t12Eg5rPSw0kYci2jJll1T8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ProfileLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "TicketStatusListLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-ticketStatusList",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 512,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "TicketStatusListLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "TicketStatusListLambdaVersion870RMiig42DuBW1edgNjYxTT2tBKYISxLJoDCLKMQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "TicketStatusListLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "TurnaroundTimesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-turnaroundTimes",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "TurnaroundTimesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "TurnaroundTimesLambdaVersionyZZQUdtQna29ltH7WloUUjnN28kOKUlzxa0TjJkLW0": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "TurnaroundTimesLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "TicketIDChangesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-ticketIDChanges",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 512,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "TicketIDChangesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "TicketIDChangesLambdaVersioneEmXx4Nr1ZwCQIOBNcptG3mm6E9TJQjBPZ2127nw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "TicketIDChangesLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "OwnerIDChangesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-ownerIDChanges",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 512,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "OwnerIDChangesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "OwnerIDChangesLambdaVersionu5M4NOh2yipeZ9F5d8dFsqVgCUk5BZiokXQhnxgns2Q": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "OwnerIDChangesLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "TicketsProcessedLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-ticketsProcessed",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "TicketsProcessedLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "TicketsProcessedLambdaVersionNMwbKAEP3jO74DIBApbmkJmA5F09AOe2H6v4UCkoKU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "TicketsProcessedLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "ListOwnersLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-listOwners",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 128,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "ListOwnersLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "ListOwnersLambdaVersionvEUOOCnfHB7e67CN2jUxw56tyQnKaH6wocDmMK8BV8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListOwnersLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "DashboardStatsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-dashboardStats",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 128,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "DashboardStatsLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "DashboardStatsLambdaVersionsgKfZ70n4sKfdbtNtBkp7s7Y3vJ0kMKwXlQ9Lytqtnk": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DashboardStatsLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "TicketsBillingLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-ticketsBilling",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "TicketsBillingLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "TicketsBillingLambdaVersionh9kbDxsWa1kYaeQ7Sr5lXXSl1oZW2IgAVdjd18WFWY": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "TicketsBillingLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "ListWatchersLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-listWatchers",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "ListWatchersLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "ListWatchersLambdaVersionyZpHQtYeTUDd9qSMQbfKId0u9d9B83xlyRiePA2IE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListWatchersLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "LoaderLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-loader",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 300,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "LoaderLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "LoaderLambdaVersionLTJwX2FBWDWhFoUOCD4DyUsweSZu4Aa6Z3kC0wS12tw": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "LoaderLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "ListFilesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-listFiles",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "ListFilesLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "ListFilesLambdaVersionGk0zRQK2qPyM2FOpYHDC5L0JzOPRGEo0TufKIjlNoaU": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListFilesLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "CustomDropdownsLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z/tickets.zip"
+              },
+              "FunctionName": "tickets-test-customDropdowns",
+              "Handler": "shared/handler.initialize",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs8.10",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "stage": "test",
+                  "region": "ca-central-1",
+                  "initStub": "false"
+                }
+              }
+            },
+            "DependsOn": [
+              "CustomDropdownsLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CustomDropdownsLambdaVersionVtw1kZqbP8YqZFwdnzE17fFnBXMEmW2C7qsVih9GE4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CustomDropdownsLambdaFunction"
+              },
+              "CodeSha256": "y6BkfGTLNV4jI8uJYf5ZEbpkRCoi1cL4BQDT04v6v88="
+            }
+          },
+          "LoaderEventsRuleSchedule1": {
+            "Type": "AWS::Events::Rule",
+            "Properties": {
+              "ScheduleExpression": "cron(0 1 * * ? *)",
+              "State": "ENABLED",
+              "Name": "ExistingRule-new",
+              "Targets": [
+                {
+                  "Arn": {
+                    "Fn::GetAtt": [
+                      "LoaderLambdaFunction",
+                      "Arn"
+                    ]
+                  },
+                  "Id": "loaderSchedule"
+                }
+              ]
+            }
+          },
+          "LoaderLambdaPermissionEventsRuleSchedule1": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoaderLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "events.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::GetAtt": [
+                  "LoaderEventsRuleSchedule1",
+                  "Arn"
+                ]
+              }
+            }
+          },
+          "ApiGatewayRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+              "Name": "test-tickets",
+              "EndpointConfiguration": {
+                "Types": [
+                  "EDGE"
+                ]
+              }
+            }
+          },
+          "ApiGatewayResourceApi": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "api",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApi"
+              },
+              "PathPart": "v1",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Init": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "init",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Profile": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "profile",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Ticketstatuslist": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "ticketStatusList",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Turnaroundtimes": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "turnaroundTimes",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Ticketidchanges": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "ticketIDChanges",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Owneridchanges": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "ownerIDChanges",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Ticketsprocessed": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "ticketsProcessed",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Listowners": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "listOwners",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Dashboardstats": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "dashboardStats",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Ticketsbilling": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "ticketsBilling",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Listwatchers": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "listWatchers",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Listfiles": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "listFiles",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceApiV1Customdropdowns": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceApiV1"
+              },
+              "PathPart": "customDropdowns",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodApiV1InitGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Init"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "InitLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1ProfileGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Profile"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ProfileLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1TicketstatuslistGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Ticketstatuslist"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "TicketStatusListLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1TurnaroundtimesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Turnaroundtimes"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "TurnaroundTimesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1TicketidchangesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Ticketidchanges"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "TicketIDChangesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1OwneridchangesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Owneridchanges"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "OwnerIDChangesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1TicketsprocessedGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Ticketsprocessed"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "TicketsProcessedLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1ListownersGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Listowners"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListOwnersLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1DashboardstatsGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Dashboardstats"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DashboardStatsLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1TicketsbillingGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Ticketsbilling"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "TicketsBillingLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1ListwatchersGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Listwatchers"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListWatchersLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1ListfilesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Listfiles"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListFilesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayMethodApiV1CustomdropdownsGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApiV1Customdropdowns"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "CustomDropdownsLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1544125991988": {
+            "Type": "AWS::ApiGateway::Deployment",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "StageName": "test"
+            },
+            "DependsOn": [
+              "ApiGatewayMethodApiV1InitGet",
+              "ApiGatewayMethodApiV1ProfileGet",
+              "ApiGatewayMethodApiV1TicketstatuslistGet",
+              "ApiGatewayMethodApiV1TurnaroundtimesGet",
+              "ApiGatewayMethodApiV1TicketidchangesGet",
+              "ApiGatewayMethodApiV1OwneridchangesGet",
+              "ApiGatewayMethodApiV1TicketsprocessedGet",
+              "ApiGatewayMethodApiV1ListownersGet",
+              "ApiGatewayMethodApiV1DashboardstatsGet",
+              "ApiGatewayMethodApiV1TicketsbillingGet",
+              "ApiGatewayMethodApiV1ListwatchersGet",
+              "ApiGatewayMethodApiV1ListfilesGet",
+              "ApiGatewayMethodApiV1CustomdropdownsGet"
+            ]
+          },
+          "InitLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "InitLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ProfileLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ProfileLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "TicketStatusListLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "TicketStatusListLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "TurnaroundTimesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "TurnaroundTimesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "TicketIDChangesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "TicketIDChangesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "OwnerIDChangesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "OwnerIDChangesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "TicketsProcessedLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "TicketsProcessedLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListOwnersLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListOwnersLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DashboardStatsLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DashboardStatsLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "TicketsBillingLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "TicketsBillingLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListWatchersLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListWatchersLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListFilesLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListFilesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "CustomDropdownsLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CustomDropdownsLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "apigateway.",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          },
+          "InitLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "InitLambdaVersionb0CX009NqFVYh6Rxp6r8rp7xfnpAhaQ4PgLkcYjFvk"
+            }
+          },
+          "ProfileLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ProfileLambdaVersionrGEC3u2raVDE9wPY6t12Eg5rPSw0kYci2jJll1T8"
+            }
+          },
+          "TicketStatusListLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "TicketStatusListLambdaVersion870RMiig42DuBW1edgNjYxTT2tBKYISxLJoDCLKMQ"
+            }
+          },
+          "TurnaroundTimesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "TurnaroundTimesLambdaVersionyZZQUdtQna29ltH7WloUUjnN28kOKUlzxa0TjJkLW0"
+            }
+          },
+          "TicketIDChangesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "TicketIDChangesLambdaVersioneEmXx4Nr1ZwCQIOBNcptG3mm6E9TJQjBPZ2127nw"
+            }
+          },
+          "OwnerIDChangesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "OwnerIDChangesLambdaVersionu5M4NOh2yipeZ9F5d8dFsqVgCUk5BZiokXQhnxgns2Q"
+            }
+          },
+          "TicketsProcessedLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "TicketsProcessedLambdaVersionNMwbKAEP3jO74DIBApbmkJmA5F09AOe2H6v4UCkoKU"
+            }
+          },
+          "ListOwnersLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListOwnersLambdaVersionvEUOOCnfHB7e67CN2jUxw56tyQnKaH6wocDmMK8BV8"
+            }
+          },
+          "DashboardStatsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DashboardStatsLambdaVersionsgKfZ70n4sKfdbtNtBkp7s7Y3vJ0kMKwXlQ9Lytqtnk"
+            }
+          },
+          "TicketsBillingLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "TicketsBillingLambdaVersionh9kbDxsWa1kYaeQ7Sr5lXXSl1oZW2IgAVdjd18WFWY"
+            }
+          },
+          "ListWatchersLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListWatchersLambdaVersionyZpHQtYeTUDd9qSMQbfKId0u9d9B83xlyRiePA2IE"
+            }
+          },
+          "LoaderLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoaderLambdaVersionLTJwX2FBWDWhFoUOCD4DyUsweSZu4Aa6Z3kC0wS12tw"
+            }
+          },
+          "ListFilesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListFilesLambdaVersionGk0zRQK2qPyM2FOpYHDC5L0JzOPRGEo0TufKIjlNoaU"
+            }
+          },
+          "CustomDropdownsLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CustomDropdownsLambdaVersionVtw1kZqbP8YqZFwdnzE17fFnBXMEmW2C7qsVih9GE4"
+            }
+          },
+          "ServiceEndpoint": {
+            "Description": "URL of the service endpoint",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "ApiGatewayRestApi"
+                  },
+                  ".execute-api.ca-central-1.",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  },
+                  "/test"
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "pluginsData": {},
+    "functions": {
+      "init": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/init",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-init",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "profile": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/profile",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-profile",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "ticketStatusList": {
+        "memorySize": 512,
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/ticketStatusList",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-ticketStatusList",
+        "package": {},
+        "memory": 512,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "turnaroundTimes": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/turnaroundTimes",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-turnaroundTimes",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "ticketIDChanges": {
+        "memorySize": 512,
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/ticketIDChanges",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-ticketIDChanges",
+        "package": {},
+        "memory": 512,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "ownerIDChanges": {
+        "memorySize": 512,
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/ownerIDChanges",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-ownerIDChanges",
+        "package": {},
+        "memory": 512,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "ticketsProcessed": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/ticketsProcessed",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-ticketsProcessed",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "listOwners": {
+        "handler": "shared/handler.initialize",
+        "memorySize": 128,
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/listOwners",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-listOwners",
+        "package": {},
+        "memory": 128,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "dashboardStats": {
+        "handler": "shared/handler.initialize",
+        "memorySize": 128,
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/dashboardStats",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-dashboardStats",
+        "package": {},
+        "memory": 128,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "ticketsBilling": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/ticketsBilling",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-ticketsBilling",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "listWatchers": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/listWatchers",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-listWatchers",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "loader": {
+        "timeout": 300,
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "schedule": {
+              "name": "ExistingRule-new",
+              "rate": "cron(0 1 * * ? *)",
+              "enabled": true
+            }
+          }
+        ],
+        "name": "tickets-test-loader",
+        "package": {},
+        "memory": 256,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "listFiles": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/listFiles",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-listFiles",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      },
+      "customDropdowns": {
+        "handler": "shared/handler.initialize",
+        "events": [
+          {
+            "http": {
+              "path": "api/v1/customDropdowns",
+              "method": "get",
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "tickets-test-customDropdowns",
+        "package": {},
+        "memory": 256,
+        "timeout": 10,
+        "runtime": "nodejs8.10",
+        "vpc": {}
+      }
+    },
+    "artifact": "/home/altouser/workspace/kms-issue/.serverless/tickets.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/tickets/test/1544125991930-2018-12-06T19:53:11.930Z",
+    "artifact": "tickets.zip"
+  }
+}

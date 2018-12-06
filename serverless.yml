@@ -1,0 +1,116 @@
+service: tickets
+
+provider:
+    name: aws
+    runtime: nodejs8.10
+    memorySize: 256
+    timeout: 10
+    stage: ${opt:stage}
+    region: ca-central-1
+    environment:
+        stage: ${opt:stage, self:provider.stage}
+        region: ${opt:region, self:provider.region}
+        initStub: ${opt:initStub, "false"}
+
+package:
+    exclude:
+        # Excluding aws-sdk module since it's already available in the AWS Lambda runtime
+        - node_modules/aws-sdk/**
+        - scripts/**
+        - test/**
+        - scratch/**
+
+functions:
+    init:
+        handler: shared/handler.initialize
+        events:
+        - http:
+            path: /api/v1/init
+            method: get
+    profile:
+        handler: shared/handler.initialize
+        events:
+            - http:
+                path: /api/v1/profile
+                method: get
+    ticketStatusList: 
+        memorySize: 512
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/ticketStatusList
+                method: get
+    turnaroundTimes: 
+        handler: shared/handler.initialize
+        events: 
+            - http:  
+                path: /api/v1/turnaroundTimes
+                method: get
+    ticketIDChanges:
+        memorySize: 512
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/ticketIDChanges
+                method: get
+    ownerIDChanges:
+        memorySize: 512
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/ownerIDChanges
+                method: get
+    ticketsProcessed:
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/ticketsProcessed
+                method: get
+    listOwners: 
+        handler: shared/handler.initialize
+        memorySize: 128
+        events: 
+            - http: 
+                path: /api/v1/listOwners
+                method: get
+    dashboardStats: 
+        handler: shared/handler.initialize
+        memorySize: 128
+        events: 
+            - http: 
+                path: /api/v1/dashboardStats
+                method: get
+    ticketsBilling:
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/ticketsBilling
+                method: get
+    listWatchers:
+        handler: shared/handler.initialize
+        events: 
+            - http: 
+                path: /api/v1/listWatchers
+                method: get
+    loader: 
+        timeout: 300
+        handler: shared/handler.initialize
+        events: 
+            - schedule: 
+                name: ExistingRule-new
+                rate: cron(0 1 * * ? *)
+                enabled: true
+    listFiles: 
+        handler: shared/handler.initialize
+        events: 
+            - http:
+                path: /api/v1/listFiles
+                method: get
+    customDropdowns: 
+        handler: shared/handler.initialize
+        events: 
+            - http:
+                path: /api/v1/customDropdowns
+                method: get
+                
+

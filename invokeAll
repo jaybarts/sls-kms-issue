@@ -1,0 +1,21 @@
+#!/bin/bash
+if [ -z "$1" ]
+then
+  echo "Stage is required"
+  exit 1
+fi 
+
+sls invoke -f init --stage $1
+sls invoke -f init --stage $1
+sls invoke -f ticketStatusList --stage $1
+sls invoke -f turnaroundTimes --stage $1
+sls invoke -f ticketIDChanges --stage $1
+sls invoke -f ownerIDChanges --stage $1
+sls invoke -f ticketsProcessed --stage $1
+sls invoke -f listOwners --stage $1
+sls invoke -f dashboardStats --stage $1
+sls invoke -f ticketsBilling --stage $1
+sls invoke -f listWatchers --stage $1
+sls invoke -f listFiles --stage $1
+sls invoke -f customDropdowns --stage $1
+
