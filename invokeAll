@@ -6,7 +6,6 @@ then
 fi 
 
 sls invoke -f init --stage $1
-sls invoke -f init --stage $1
 sls invoke -f ticketStatusList --stage $1
 sls invoke -f turnaroundTimes --stage $1
 sls invoke -f ticketIDChanges --stage $1
